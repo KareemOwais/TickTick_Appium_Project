@@ -1,15 +1,7 @@
 
-import Factory.WebDriverFactory;
-import Interactions.Button;
-import Interactions.Label;
-import Interactions.Textbox;
 import Pages.Task;
 import Pages.TasksPage;
-import Utils.WaitUtils;
-import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
+
 import org.testng.annotations.Test;
 
 
@@ -18,11 +10,19 @@ public class ExampleTest {
     public void Test1() throws InterruptedException {
 
         TasksPage tasksPage = new TasksPage();
-        tasksPage.editTask("Test1");
-        Task.SetPriority("High");
-        String Pir = Task.getSelectedPriority();
-        System.out.println(Pir);
 
+        tasksPage.ChooseList("tt");
+        tasksPage.editTask("Test2");
+        Task.EditTaskName("Kareem's Task");
+        Task.SetPriority("High");
+        Task.AddTag("Testing123");
+        Task.RemoveTag("Project");
+        Task.Add_Descrioption("This is a test description");
+        Task.Exit_Task();
+        tasksPage.clickTaskCheckbox("Test3");
+        tasksPage.clickTaskCheckbox("Kareem's Task");
+        tasksPage.CreateTask("Test Task", "This is a test task");
+        tasksPage.clickTaskCheckbox("Test Task");
     }
 }
 
