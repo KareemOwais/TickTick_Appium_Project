@@ -5,6 +5,8 @@ import Interactions.Button;
 import Interactions.Textbox;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
 import java.util.List;
 
 public class TasksPage {
@@ -12,7 +14,8 @@ public class TasksPage {
     Textbox TaskName = new Textbox(AppiumBy.id("com.ticktick.task:id/et_title"), "Task Name");
     Textbox TaskDescription = new Textbox(AppiumBy.id("com.ticktick.task:id/et_content"), "Task Description");
     Button ConfirmTask = new Button(AppiumBy.id("com.ticktick.task:id/iv_save"));
-    Button Listmenu = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(1)"));
+    public static Button ListButton = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(0)"));
+    public static Button Listmenu = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(1)"));
     private WebElement FindTask(String taskName) {
         // Get all task containers
         List<WebElement> containers = WebDriverFactory.getDriver().findElements(AppiumBy.xpath(
@@ -70,5 +73,11 @@ public class TasksPage {
             }
         }
     }
+    public void assertTaskNameField(String taskName)
+    {
+        String actualName = WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"" + taskName + "\")")).getText();
+        Assert.assertEquals(actualName, taskName, "Task name does not match the expected value.");
+    }
+
 
 }
