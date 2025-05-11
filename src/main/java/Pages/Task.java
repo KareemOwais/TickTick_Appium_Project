@@ -5,6 +5,7 @@ import Interactions.Button;
 import Interactions.Textbox;
 import Utils.MobileEvents;
 import Utils.WaitUtils;
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
 
@@ -62,6 +63,7 @@ public class Task {
             WebElement TagCheckBox = WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\""+TagName+"\")"));
             if(TagCheckBox.isEnabled()){
                 TagCheckBox.click();
+                TagCheckBox.click();
                 Save_Tags_Button.click();
             }
             else
@@ -97,6 +99,44 @@ public class Task {
     }
     public static void SetNameAndDate(String Name , String Date){
         EditTaskName(Name+" @"+Date);
+    }
+
+    public static void assertPriorityIsChecked(String priorityToCheck)
+    {
+        Priority_Button.click();
+        // Store the list of priorities
+        List<WebElement> priorities = WebDriverFactory.getDriver()
+                .findElements(AppiumBy.className("android.widget.LinearLayout"));
+
+        Boolean flag = false;
+
+        // Loop through all priorities
+        for (WebElement priority : priorities)
+        {
+            // Get the title of the priority
+            WebElement title = priority.findElement(AppiumBy.id("com.ticktick.task:id/tv_title"));
+
+            // Get the type of the priority
+            String text = title.getText();
+
+            // Check if this priority is checked
+            boolean check = !priority
+                    .findElements(AppiumBy.id("com.ticktick.task:id/iv_checked"))
+                    .isEmpty();
+
+            // Check if this is the right one
+            if (text.equals(priorityToCheck) && check)
+            {
+                //Assert.assertEquals(priorityToCheck, text);
+                System.out.println("Expected " + priorityToCheck + " is checked");
+                flag = true;
+            }
+        }
+        if(!flag)
+        {
+            throw new AssertionError("Expected " + priorityToCheck + " , but it was not");
+        }
+        MobileEvents.BackButton();
     }
 
 
