@@ -3,16 +3,16 @@ package Pages;
 import Factory.WebDriverFactory;
 import Interactions.Button;
 import Interactions.Textbox;
-import Utils.MobileEvents;
+import Utils.MobileGestures;
 import Utils.WaitUtils;
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
-
-import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class Task {
+    protected static final Logger logger = LoggerFactory.getLogger(Task.class);
     private static final Textbox EditName = new Textbox(AppiumBy.id("com.ticktick.task:id/edit_text") , "Edit task name");
     private static final Button EditName_Button = new Button(AppiumBy.id("com.ticktick.task:id/list_item_title"), "Edit Name Button");
     private static final Button Priority_Button = new Button(AppiumBy.id("com.ticktick.task:id/priority_toggle_btn") , "Change Priority");
@@ -29,10 +29,11 @@ public class Task {
 
     public static void EditTaskName(String Name){
         EditName_Button.click();
-        MobileEvents.HideKeyboard();
+        MobileGestures.HideKeyboard();
         EditName.ClearText();
         EditName.setText(Name);
-        MobileEvents.PressEnter();
+        MobileGestures.PressEnter();
+        logger.info("Task name set to: {}", Name);
     }
 
     public static void SetPriority(String Priority){
@@ -53,6 +54,7 @@ public class Task {
             default:
                 break;
         }
+        logger.info("Task priority set to: {}", Priority);
     }
 
     public static void RemoveTag(String TagName) throws InterruptedException {
@@ -65,37 +67,41 @@ public class Task {
                 TagCheckBox.click();
                 TagCheckBox.click();
                 Save_Tags_Button.click();
+                logger.info("Tag removed: {}", TagName);
             }
             else
-                System.out.println("Something Went Wrong");
+                logger.error("unable to remove the tag: {}", TagName);
         }
         else{
-            System.out.println("Tag doesn't exsits");
+            logger.error("Tag doesn't exsits");
         }
     }
 
     public static void AddTag(String TagName){
         Add_Tag.click();
         Tag_Name_Field.setText(TagName);
-        MobileEvents.PressEnter();
-        MobileEvents.HideKeyboard();
+        MobileGestures.PressEnter();
+        MobileGestures.HideKeyboard();
+        logger.info("Tag added: {}", TagName);
     }
     public static void Exit_Task(){
-        MobileEvents.BackButton();
+        MobileGestures.BackButton();
     }
 
     public static void Add_Descrioption(String Desc){
         Descp_Button.click();
-        MobileEvents.HideKeyboard();
+        MobileGestures.HideKeyboard();
         Descp_TexBox.setText(Desc);
-        MobileEvents.PressEnter();
+        MobileGestures.PressEnter();
+        logger.info("Task description set to: {}", Desc);
     }
     public static void SetTaskDate(String Date){
         String Text =EditName.GetText();
         EditName_Button.click();
         EditName.setText(Text+" @"+Date);
-        MobileEvents.PressEnter();
-        MobileEvents.HideKeyboard();
+        MobileGestures.PressEnter();
+        MobileGestures.HideKeyboard();
+        logger.info("Task date set to: {}", Date);
     }
     public static void SetNameAndDate(String Name , String Date){
         EditTaskName(Name+" @"+Date);
@@ -136,7 +142,7 @@ public class Task {
         {
             throw new AssertionError("Expected " + priorityToCheck + " , but it was not");
         }
-        MobileEvents.BackButton();
+        MobileGestures.BackButton();
     }
 
 

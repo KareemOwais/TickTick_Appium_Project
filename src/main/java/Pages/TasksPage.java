@@ -3,10 +3,12 @@ package Pages;
 import Factory.WebDriverFactory;
 import Interactions.Button;
 import Interactions.Textbox;
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
-
 import java.util.List;
 
 public class TasksPage {
@@ -78,6 +80,43 @@ public class TasksPage {
         String actualName = WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"" + taskName + "\")")).getText();
         Assert.assertEquals(actualName, taskName, "Task name does not match the expected value.");
     }
+    public static void multiplpeSelectPriority()
+    {
+        // Element for long press
+        WebElement ele = WebDriverFactory.getDriver().findElement(By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.ticktick.task:id/list\"]/android.view.ViewGroup[2]"));
 
+        // Long press gesture
+        WebDriverFactory.getDriver().executeScript("mobile: longClickGesture",
+                ImmutableMap.of("elementId", ((RemoteWebElement) ele).getId(),
+                        "duration", 2000
+                ));
+
+        // Select multiple tasks
+        WebDriverFactory.getDriver().findElement(By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.ticktick.task:id/list\"]/android.view.ViewGroup[3]")).click();
+        WebDriverFactory.getDriver().findElement(By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.ticktick.task:id/list\"]/android.view.ViewGroup[4]")).click();
+
+        // Click More
+        WebDriverFactory.getDriver().findElement(By.id("com.ticktick.task:id/more")).click();
+
+        // Click Set Priority
+        WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"Set Priority\")")).click();
+
+        // Click on Low Priority
+        WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"Low Priority\")")).click();
+    }
+    public static void CheckTaskAsWontDO()
+    {
+        // Element for long press
+        WebElement ele = WebDriverFactory.getDriver().findElement(By.xpath("(//android.widget.ImageView[@resource-id=\"com.ticktick.task:id/checkbox\"])[2]"));
+
+        // Long press gesture
+        WebDriverFactory.getDriver().executeScript("mobile: longClickGesture",
+                ImmutableMap.of("elementId", ((RemoteWebElement) ele).getId(),
+                        "duration", 2000
+                ));
+
+        // Click on Wont Do
+        WebDriverFactory.getDriver().findElement(By.xpath("(//android.widget.RadioButton[@resource-id=\"com.ticktick.task:id/checkbox\"])[2]\n")).click();
+    }
 
 }
