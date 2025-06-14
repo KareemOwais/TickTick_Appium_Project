@@ -7,14 +7,17 @@ import org.slf4j.LoggerFactory;
 
 
 public abstract class Element {
-    public By Locator ;
+    protected By Locator ;
     protected static final Logger logger = LoggerFactory.getLogger(Element.class);
-    String Description ;
+    protected String Description ;
     protected AndroidDriver driver;
     // Constructor
     protected Element(By Locator) {
         this.Locator = Locator;
         this.driver = WebDriverFactory.getDriver();
+    }
+    public By getLocator() {
+        return Locator;
     }
 
 }

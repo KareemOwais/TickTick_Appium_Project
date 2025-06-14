@@ -12,22 +12,22 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class Task {
-    protected static final Logger logger = LoggerFactory.getLogger(Task.class);
-    private static final Textbox EditName = new Textbox(AppiumBy.id("com.ticktick.task:id/edit_text") , "Edit task name");
-    private static final Button EditName_Button = new Button(AppiumBy.id("com.ticktick.task:id/list_item_title"), "Edit Name Button");
-    private static final Button Priority_Button = new Button(AppiumBy.id("com.ticktick.task:id/priority_toggle_btn") , "Change Priority");
-    private static final Button High_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"High Priority\")"),"Set High Priority");
-    private static final Button Med_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"Medium Priority\")"),"Set High Priority");
-    private static final Button Low_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"Low Priority\")"),"Set High Priority");
-    private static final Button No_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"No Priority\")"),"Set High Priority");
-    private static final Button Add_Tag = new Button(AppiumBy.id("com.ticktick.task:id/input_tag"),"Add a tag");
-    private static final Button Save_Tags_Button = new Button(AppiumBy.id("android:id/button1"));
-    private static final Textbox Tag_Name_Field = new Textbox(AppiumBy.id("com.ticktick.task:id/input_tag_et"), "Add the Tag");
-    private static final Button Descp_Button = new Button(AppiumBy.id("com.ticktick.task:id/task_editor_composite"));
-    private static final Textbox Descp_TexBox = new Textbox(AppiumBy.id("com.ticktick.task:id/task_editor_composite"),"Description TexBox");
+    protected  final Logger logger = LoggerFactory.getLogger(Task.class);
+    private  final Textbox EditName = new Textbox(AppiumBy.id("com.ticktick.task:id/edit_text") , "Edit task name");
+    private  final Button EditName_Button = new Button(AppiumBy.id("com.ticktick.task:id/list_item_title"), "Edit Name Button");
+    private  final Button Priority_Button = new Button(AppiumBy.id("com.ticktick.task:id/priority_toggle_btn") , "Change Priority");
+    private  final Button High_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"High Priority\")"),"Set High Priority");
+    private  final Button Med_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"Medium Priority\")"),"Set High Priority");
+    private  final Button Low_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"Low Priority\")"),"Set High Priority");
+    private  final Button No_Pr = new Button(AppiumBy.androidUIAutomator("new UiSelector().text(\"No Priority\")"),"Set High Priority");
+    private  final Button Add_Tag = new Button(AppiumBy.id("com.ticktick.task:id/input_tag"),"Add a tag");
+    private  final Button Save_Tags_Button = new Button(AppiumBy.id("android:id/button1"));
+    private  final Textbox Tag_Name_Field = new Textbox(AppiumBy.id("com.ticktick.task:id/input_tag_et"), "Add the Tag");
+    private  final Button Descp_Button = new Button(AppiumBy.id("com.ticktick.task:id/task_editor_composite"));
+    private  final Textbox Descp_TexBox = new Textbox(AppiumBy.id("com.ticktick.task:id/task_editor_composite"),"Description TexBox");
     //private static final String Check_Priority = "/android.widget.ImageView[@resource-id=\"com.ticktick.task:id/iv_checked\"]"
 
-    public static void EditTaskName(String Name){
+    public  void EditTaskName(String Name){
         EditName_Button.click();
         MobileGestures.HideKeyboard();
         EditName.ClearText();
@@ -36,7 +36,7 @@ public class Task {
         logger.info("Task name set to: {}", Name);
     }
 
-    public static void SetPriority(String Priority){
+    public  void SetPriority(String Priority){
         Priority_Button.click();
         switch (Priority){
             case "High":
@@ -57,7 +57,7 @@ public class Task {
         logger.info("Task priority set to: {}", Priority);
     }
 
-    public static void RemoveTag(String TagName) throws InterruptedException {
+    public  void RemoveTag(String TagName) throws InterruptedException {
         WebElement Tag = WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\""+TagName+"\").instance(1)"));
         if(Tag.isEnabled()){
             Tag.click();
@@ -77,25 +77,25 @@ public class Task {
         }
     }
 
-    public static void AddTag(String TagName){
+    public  void AddTag(String TagName){
         Add_Tag.click();
         Tag_Name_Field.setText(TagName);
         MobileGestures.PressEnter();
         MobileGestures.HideKeyboard();
         logger.info("Tag added: {}", TagName);
     }
-    public static void Exit_Task(){
+    public  void Exit_Task(){
         MobileGestures.BackButton();
     }
 
-    public static void Add_Descrioption(String Desc){
+    public  void Add_Descrioption(String Desc){
         Descp_Button.click();
         MobileGestures.HideKeyboard();
         Descp_TexBox.setText(Desc);
         MobileGestures.PressEnter();
         logger.info("Task description set to: {}", Desc);
     }
-    public static void SetTaskDate(String Date){
+    public  void SetTaskDate(String Date){
         String Text =EditName.GetText();
         EditName_Button.click();
         EditName.setText(Text+" @"+Date);
@@ -103,11 +103,11 @@ public class Task {
         MobileGestures.HideKeyboard();
         logger.info("Task date set to: {}", Date);
     }
-    public static void SetNameAndDate(String Name , String Date){
+    public  void SetNameAndDate(String Name , String Date){
         EditTaskName(Name+" @"+Date);
     }
 
-    public static void assertPriorityIsChecked(String priorityToCheck)
+    public  void assertPriorityIsChecked(String priorityToCheck)
     {
         Priority_Button.click();
         // Store the list of priorities

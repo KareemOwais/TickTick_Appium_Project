@@ -12,11 +12,11 @@ import org.testng.Assert;
 import java.util.List;
 
 public class TasksPage {
-    Button AddTask = new Button(AppiumBy.id("com.ticktick.task:id/add_task_btn"));
-    Textbox TaskName = new Textbox(AppiumBy.id("com.ticktick.task:id/et_title"), "Task Name");
-    Textbox TaskDescription = new Textbox(AppiumBy.id("com.ticktick.task:id/et_content"), "Task Description");
-    Button ConfirmTask = new Button(AppiumBy.id("com.ticktick.task:id/iv_save"));
-    public static Button ListButton = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(0)"));
+    private Button AddTask = new Button(AppiumBy.id("com.ticktick.task:id/add_task_btn"));
+    private Textbox TaskName = new Textbox(AppiumBy.id("com.ticktick.task:id/et_title"), "Task Name");
+    private Textbox TaskDescription = new Textbox(AppiumBy.id("com.ticktick.task:id/et_content"), "Task Description");
+    private Button ConfirmTask = new Button(AppiumBy.id("com.ticktick.task:id/iv_save"));
+    private  Button ListButton = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(0)"));
     public static Button Listmenu = new Button(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.ImageButton\").instance(1)"));
     private WebElement FindTask(String taskName) {
         // Get all task containers
@@ -46,12 +46,14 @@ public class TasksPage {
             System.out.println("Task not found: " + taskName);
         }
     }
-    public void editTask(String taskName) {
+    public Task editTask(String taskName) {
         WebElement task = FindTask(taskName);
         if (task != null) {
             task.click();
+            return new Task();
         } else {
             System.out.println("Task not found: " + taskName);
+            return null;
         }
     }
     public void CreateTask(String Name , String Description){
@@ -80,7 +82,7 @@ public class TasksPage {
         String actualName = WebDriverFactory.getDriver().findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"" + taskName + "\")")).getText();
         Assert.assertEquals(actualName, taskName, "Task name does not match the expected value.");
     }
-    public static void multiplpeSelectPriority()
+    public  void multiplpeSelectPriority()
     {
         // Element for long press
         WebElement ele = WebDriverFactory.getDriver().findElement(By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.ticktick.task:id/list\"]/android.view.ViewGroup[2]"));

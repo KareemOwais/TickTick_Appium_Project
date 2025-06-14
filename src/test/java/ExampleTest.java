@@ -16,16 +16,17 @@ public class ExampleTest {
     @Test
     public void Test1() throws InterruptedException {
         TasksPage tasksPage = new TasksPage();
+
         tasksPage.ChooseList("Test1");
         tasksPage.clickTaskCheckbox("Test2");
-        tasksPage.editTask("Kareem");
-        Task.EditTaskName("Kareem's Task");
-        Task.SetPriority("High");
-        Task.assertPriorityIsChecked("High Priority");
-        Task.AddTag("Testing123");
-        Task.RemoveTag("t1");
-        Task.Add_Descrioption("This is a test description");
-        Task.Exit_Task();
+        Task task1 = tasksPage.editTask("Kareem");
+        task1.EditTaskName("Kareem's Task");
+        task1.SetPriority("High");
+        task1.assertPriorityIsChecked("High Priority");
+        task1.AddTag("Testing123");
+        task1.RemoveTag("t1");
+        task1.Add_Descrioption("This is a test description");
+        task1.Exit_Task();
         tasksPage.clickTaskCheckbox("Kareem's Task");
         tasksPage.CreateTask("Test Task", "This is a test task");
     }
@@ -37,7 +38,7 @@ public class ExampleTest {
         TasksPage.CheckTaskAsWontDO();
         MobileGestures.rotateLandscape();
         MobileGestures.rotatePortrait();
-        TasksPage.multiplpeSelectPriority();
+        tasksPage.multiplpeSelectPriority();
     }
 
 
@@ -48,11 +49,11 @@ public class ExampleTest {
         tasksPage.ChooseList("invalidTest2");
         tasksPage.assertTaskNameField("invalidTest2");
         tasksPage.clickTaskCheckbox("T2");
-        tasksPage.editTask("Yehya");
-        Task.EditTaskName("Kareem");
+        Task task1 = tasksPage.editTask("Yehya");
+        task1.EditTaskName("Kareem");
         try
         {
-            Task.SetPriority("VeryHigh");
+            task1.SetPriority("VeryHigh");
         }
         catch (Exception e)
         {
@@ -60,9 +61,9 @@ public class ExampleTest {
 
         }
         MobileGestures.BackButton();
-        Task.AddTag("Testing123");
-        Task.Add_Descrioption("This is a test description");
-        Task.Exit_Task();
+        task1.AddTag("Testing123");
+        task1.Add_Descrioption("This is a test description");
+        task1.Exit_Task();
         tasksPage.clickTaskCheckbox("Kareem's Task");
         tasksPage.CreateTask("Test Task", "This is a test task");
         tasksPage.clickTaskCheckbox("Test Task");
@@ -72,13 +73,13 @@ public class ExampleTest {
     public void invalidTestNonExistentTask() throws InterruptedException {
         TasksPage tasksPage = new TasksPage();
         tasksPage.clickTaskCheckbox("Test2");
-        tasksPage.editTask("Kareem");
-        Task.EditTaskName("Kareem's Task");
-        Task.SetPriority("High");
-        Task.assertPriorityIsChecked("High Priority");
-        Task.AddTag("Testing123");
-        Task.Add_Descrioption("This is a test description");
-        Task.Exit_Task();
+        Task task1 = tasksPage.editTask("Kareem");
+        task1.EditTaskName("Kareem's Task");
+        task1.SetPriority("High");
+        task1.assertPriorityIsChecked("High Priority");
+        task1.AddTag("Testing123");
+        task1.Add_Descrioption("This is a test description");
+        task1.Exit_Task();
         // Attempt to interact with a non-existent task
         try
         {
