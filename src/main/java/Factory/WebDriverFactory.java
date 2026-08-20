@@ -14,6 +14,7 @@ public class WebDriverFactory {
     protected static final Logger logger = LoggerFactory.getLogger(WebDriverFactory.class);
     private static AndroidDriver driver;
     private static AppiumDriverLocalService service;
+    private static final String DEVICE_UDID = System.getenv().getOrDefault("ANDROID_UDID", "YOUR_DEVICE_UDID");
 
 
     public static AndroidDriver InitDriver() {
@@ -28,7 +29,7 @@ public class WebDriverFactory {
         service.start();
 
         UiAutomator2Options options = new UiAutomator2Options()
-                .setUdid("YOUR_DEVICE_UDID")
+                .setUdid(DEVICE_UDID)
                 .setAutoGrantPermissions(true)
                 .setNoReset(true)
                 .setPlatformName("Android")
